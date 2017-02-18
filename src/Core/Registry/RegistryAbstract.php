@@ -1,5 +1,5 @@
 <?php
-namespace Core\App\Registry;
+namespace Core\Registry;
 
 /**
  * Class RegistryAbstract

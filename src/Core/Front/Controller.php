@@ -1,7 +1,7 @@
 <?php
-namespace Core\App;
+namespace Core\Front;
 
-use Core\App\Helper as App;
+use Core\Helper as App;
 
 /**
  * Class Controller
@@ -31,8 +31,14 @@ class Controller {
         $this->applicationHelper->init();
     }
 
+    /**
+     * Handle a request
+     */
     public function handleRequest()
     {
-        echo "Request handling";
+        $request = \Core\Registry\ApplicationRegistry::getRequest();
+        $cmd_r = new \Core\Command\CommandResolver();
+        $cmd = $cmd_r->getCommand($request);
+        $cmd->execute($request);
     }
 }

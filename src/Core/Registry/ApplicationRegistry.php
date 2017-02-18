@@ -1,9 +1,18 @@
 <?php
-namespace Core\App\Registry;
+/**
+ * Core registry class.
+ */
+namespace Core\Registry;
 
+/**
+ * Class ApplicationRegistry
+ * @package Core\Registry
+ */
 class ApplicationRegistry extends RegistryAbstract
 {
     /**
+     * Application instance
+     *
      * @var ApplicationRegistry|null
      */
     private static $instance = null;
@@ -11,6 +20,7 @@ class ApplicationRegistry extends RegistryAbstract
     /** @var array  */
     private $values = [];
 
+    private $request;
     /**
      * Frezze dir
      *
@@ -19,6 +29,8 @@ class ApplicationRegistry extends RegistryAbstract
     private $frezeedir = "data";
 
     /**
+     * Cache storage array
+     *
      * @var array
      */
     private $mtimes = array();
@@ -97,5 +109,24 @@ class ApplicationRegistry extends RegistryAbstract
     static function setConfig($config)
     {
         self::instance()->set("config", $config);
+    }
+
+    /**
+     * Get current request
+     *
+     * @return \Core\Controller\Request
+     */
+    static function getRequest()
+    {
+        $inst = self::instance();
+        if (is_null($inst->request)) {
+            $inst->request = new \Core\Controller\Request();
+        }
+        return $inst->request;
+    }
+
+    static function getBaseDir()
+    {
+        return $_SERVER['DOCUMENT_ROOT'];
     }
 }

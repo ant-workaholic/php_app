@@ -1,5 +1,5 @@
 <?php
-namespace Core\App\Helper;
+namespace Core\Helper;
 
 /**
  * Class ApplicationHelper
@@ -39,22 +39,23 @@ class ApplicationHelper {
      */
     public function init()
     {
-        $dns = \Core\App\Registry\ApplicationRegistry::getConfig();
+        $dns = \Core\Registry\ApplicationRegistry::getConfig();
         if (!is_null($dns)) {
             return;
         }
         $this->parseIni();
     }
 
+
     /**
-     *
+     * Parse a config file.
      */
     protected function parseIni()
     {
         $this->ensure(file_exists($this->_config), "Config file isn't exist.");
         $options = parse_ini_file($this->_config);
         if (isset($options["dns"])) {
-            \Core\App\Registry\ApplicationRegistry::setConfig($options);
+            \Core\Registry\ApplicationRegistry::setConfig($options);
         }
         $this->ensure($options, "The config file is empty!");
     }
@@ -62,12 +63,12 @@ class ApplicationHelper {
     /**
      * @param $expr
      * @param $msg
-     * @throws \Core\App\Exception\Base
+     * @throws \Core\Exception\Base
      */
     public function ensure($expr, $msg)
     {
         if (!$expr) {
-            throw new \Core\App\Exception\Base($msg);
+            throw new \Core\Exception\Base($msg);
         }
     }
     private function __clone(){}
