@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<control>
+    <view>main</view>
+    <view status="CMD_OK">main</view>
+    <view status="CMD_ERROR">error</view>
+    <command name="ListVenues">
+        <view>listvenues</view>
+    </command>
+</control>

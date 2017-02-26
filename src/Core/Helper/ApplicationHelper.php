@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 namespace Core\Helper;
 
 /**
@@ -10,6 +13,7 @@ class ApplicationHelper {
      * @var string
      */
     protected $_config = "conf/params.ini";
+    protected $_routers = "conf/routers.xml";
 
     /**
      * @var null
@@ -39,18 +43,40 @@ class ApplicationHelper {
      */
     public function init()
     {
-        $dns = \Core\Registry\ApplicationRegistry::getConfig();
-        if (!is_null($dns)) {
+        $data = \Core\Registry\ApplicationRegistry::getConfig();
+        if (!is_null($data)) {
             return;
         }
-        $this->parseIni();
+        $this->parseData();
+
+        $routesMap = \Core\Registry\ApplicationRegistry::getControllerMap();
+        if (!is_null($routesMap)) {
+            return;
+        }
+        $this->loadRoutersConfig();
     }
 
+    /**
+     * Parse data from routers config file
+     */
+    protected function loadRoutersConfig()
+    {
+        $routes = @simplexml_load_file($this->_routers);
+        $this->ensure(file_exists($this->_routers), "The routers files is not exists!");
+
+        $map = new \Core\Controller\ControllerMap();
+        foreach ($routes->control->view as $default_view) {
+            $statusConf = trim($default_view['status']);
+            $status = \Core\Command\Command::statuses($statusConf);
+            $map->addView((string) $default_view, 'default', $status);
+        }
+        \Core\Registry\ApplicationRegistry::setControllerMap($map);
+    }
 
     /**
      * Parse a config file.
      */
-    protected function parseIni()
+    protected function parseData()
     {
         $this->ensure(file_exists($this->_config), "Config file isn't exist.");
         $options = parse_ini_file($this->_config);
@@ -58,6 +84,7 @@ class ApplicationHelper {
             \Core\Registry\ApplicationRegistry::setConfig($options);
         }
         $this->ensure($options, "The config file is empty!");
+
     }
 
     /**

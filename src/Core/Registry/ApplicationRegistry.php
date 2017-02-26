@@ -92,6 +92,24 @@ class ApplicationRegistry extends RegistryAbstract
     }
 
     /**
+     * Get controller map from cache
+     */
+    static function getControllerMap()
+    {
+        self::instance()->get("controller_map");
+    }
+
+    /**
+     * Save controller map data in cache
+     *
+     * @param \Core\Controller\ControllerMap $controllerMap
+     */
+    static function setControllerMap(\Core\Controller\ControllerMap $controllerMap)
+    {
+        self::instance()->set("controller_map", $controllerMap);
+    }
+
+    /**
      * Get DNS
      *
      * @return mixed|null

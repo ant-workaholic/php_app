@@ -37,8 +37,17 @@ class Controller {
     public function handleRequest()
     {
         $request = \Core\Registry\ApplicationRegistry::getRequest();
-        $cmd_r = new \Core\Command\CommandResolver();
-        $cmd = $cmd_r->getCommand($request);
-        $cmd->execute($request);
+        $appController = \Core\Registry\ApplicationRegistry::appController();
+
+        /** @var \Core\Controller\Request $cmd */
+        while ($cmd = $appController->getCommand($request)) {
+            $cmd->execute($request);
+        }
+        $this->invokeView($appController->getView($request));
+    }
+
+    public function invokeView($target)
+    {
+        include(realpath("Core/View/$target.php"));
     }
 }
