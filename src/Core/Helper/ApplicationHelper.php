@@ -13,7 +13,7 @@ class ApplicationHelper {
      * @var string
      */
     protected $_config = "conf/params.ini";
-    protected $_routers = "conf/routers.xml";
+    protected $_routers = "conf/routes.xml";
 
     /**
      * @var null
@@ -44,16 +44,15 @@ class ApplicationHelper {
     public function init()
     {
         $data = \Core\Registry\ApplicationRegistry::getConfig();
-        if (!is_null($data)) {
-            return;
+        if (is_null($data)) {
+            $this->parseData();
         }
-        $this->parseData();
-
         $routesMap = \Core\Registry\ApplicationRegistry::getControllerMap();
-        if (!is_null($routesMap)) {
-            return;
+
+        if (is_null($routesMap)) {
+            $this->loadRoutersConfig();
         }
-        $this->loadRoutersConfig();
+        return;
     }
 
     /**
@@ -61,12 +60,12 @@ class ApplicationHelper {
      */
     protected function loadRoutersConfig()
     {
-        $routes = @simplexml_load_file($this->_routers);
         $this->ensure(file_exists($this->_routers), "The routers files is not exists!");
+        $routes = @simplexml_load_file($this->_routers);
 
         $map = new \Core\Controller\ControllerMap();
-        foreach ($routes->control->view as $default_view) {
-            $statusConf = trim($default_view['status']);
+        foreach ($routes->view as  $default_view) {
+            $statusConf = trim($default_view["status"]);
             $status = \Core\Command\Command::statuses($statusConf);
             $map->addView((string) $default_view, 'default', $status);
         }

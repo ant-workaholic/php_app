@@ -20,6 +20,8 @@ class ApplicationRegistry extends RegistryAbstract
     /** @var array  */
     private $values = [];
 
+    private $appController;
+
     private $request;
     /**
      * Frezze dir
@@ -96,7 +98,7 @@ class ApplicationRegistry extends RegistryAbstract
      */
     static function getControllerMap()
     {
-        self::instance()->get("controller_map");
+        return self::instance()->get("controller_map");
     }
 
     /**
@@ -127,6 +129,18 @@ class ApplicationRegistry extends RegistryAbstract
     static function setConfig($config)
     {
         self::instance()->set("config", $config);
+    }
+
+    /**
+     * Get app controller instance
+     */
+    static function appController()
+    {
+        $inst = self::instance();
+        if (is_null($inst->appController)) {
+            $inst->appController = new \Core\Controller\AppController(self::getControllerMap());
+        }
+        return $inst->appController;
     }
 
     /**
