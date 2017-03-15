@@ -6,6 +6,7 @@ namespace Core\Helper;
 
 /**
  * Class ApplicationHelper
+ * @package Core\Helper
  */
 class ApplicationHelper {
 

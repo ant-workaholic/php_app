@@ -1,6 +1,10 @@
 <?php
 namespace Core\Controller;
 
+/**
+ * Class AppController
+ * @package Core\Controller
+ */
 class AppController
 {
     private static $base_cmd = null;

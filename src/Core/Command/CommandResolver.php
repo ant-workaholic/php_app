@@ -14,6 +14,9 @@ class CommandResolver {
     private static $default_cmd = null;
 
 
+    /**
+     * CommandResolver constructor.
+     */
     public function __construct()
     {
         if (is_null(self::$base_cmd)) {
@@ -22,6 +25,10 @@ class CommandResolver {
         }
     }
 
+    /**
+     * @param \Core\Controller\Request $request
+     * @return DefaultCommand|null|object
+     */
     public function getCommand(\Core\Controller\Request $request)
     {
         $cmd = $request->getProperty('cmd');

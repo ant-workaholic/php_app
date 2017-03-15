@@ -8,6 +8,9 @@ use \Core\Controller\Request;
  */
 abstract class Command
 {
+    /**
+     * @var array
+     */
     private static $STATUS_STRINGS = [
         'CMD_DEFAULT'            => 0,
         'CMD_OK'                 => 1,

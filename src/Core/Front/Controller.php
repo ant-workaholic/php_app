@@ -5,6 +5,7 @@ use Core\Helper as App;
 
 /**
  * Class Controller
+ * @package Core\Front
  */
 class Controller {
 
