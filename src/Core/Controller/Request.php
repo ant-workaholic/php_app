@@ -13,6 +13,7 @@ class Request
 {
     private $properties;
     private $feedback = [];
+    private $command;
 
     /**
      * Request constructor.
@@ -79,5 +80,21 @@ class Request
     public function getFeedback()
     {
         return $this->feedback;
+    }
+
+    /**
+     * @param \Core\Command\Command $command
+     */
+    public function setLastCommand(\Core\Command\Command $command)
+    {
+        $this->command = $command;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastCommand()
+    {
+        return $this->command;
     }
 }

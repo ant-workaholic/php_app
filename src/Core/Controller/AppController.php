@@ -10,11 +10,10 @@ class AppController
 
     /**
      * AppController constructor.
-     * @param ControllerMap $map
      */
-    public function __construct(ControllerMap $map)
+    public function __construct()
     {
-        $this->controllerMap = $map;
+        $this->controllerMap = \Core\Registry\ApplicationRegistry::getControllerMap();
         if (is_null(self::$base_cmd)) {
             self::$base_cmd = new \ReflectionClass("Core\\Command\\Command");
             self::$default_cmd = new \Core\Command\DefaultCommand();
@@ -33,9 +32,22 @@ class AppController
      * @param Request $req
      * @return mixed
      */
+    private function getForward(Request $req)
+    {
+        $forward = $this->getResource($req, "Forward");
+        if ($forward) {
+            $req->setProperty("cmd", $forward);
+        }
+        return $forward;
+    }
+
+    /**
+     * @param Request $req
+     * @return mixed
+     */
     public function getView(Request $req)
     {
-        $view =  $this->getResource($req, "View");
+        $view = $this->getResource($req, "View");
         return $view;
     }
 
@@ -70,5 +82,56 @@ class AppController
         return $resource;
     }
 
+    /**
+     * @param Request $req
+     * @return \Core\Command\DefaultCommand|null
+     * @throws \Core\Exception\Base
+     */
+    public function getCommand(Request $req)
+    {
+        $previous = $req->getLastCommand();
+        if (!$previous) {
+            $cmd = $req->getProperty("cmd");
+            if (is_null($cmd)) {
+                $req->setProperty("cmd", "default");
+                return self::$default_cmd;
+            }
+        } else {
+            $cmd = $this->getForward($req);
+            if (is_null($cmd)) {
+                return null;
+            }
+        }
+        $cmdObj = $this->resolveCommand($cmd);
+        if (is_null($cmdObj)) {
+           throw new \Core\Exception\Base("Command was not found.");
+        }
+        $cmdClass = get_class($cmdObj);
+        if (isset($this->invoked[$cmdClass])) {
+            throw  new \Core\Exception\Base("Cyclic call");
+        }
+        $this->invoked[$cmdClass] = 1;
+        return $cmdObj;
+    }
 
+    /**
+     * @param $cmd
+     * @return null|object
+     */
+    public function resolveCommand($cmd)
+    {
+        $classroot = $this->controllerMap->getClassroot($cmd);
+        $filepath = "Core/Command/$classroot";
+        $classname = "\\Core\\Command\\$classroot";
+        if (file_exists($filepath)) {
+            require_once ("$filepath");
+            if (class_exists($classname)) {
+                $cmdClass = new \ReflectionClass($classname);
+                if ($cmdClass->isSubclassOf(self::$base_cmd)) {
+                    return $cmdClass->newInstance();
+                }
+            }
+        }
+        return null;
+    }
 }

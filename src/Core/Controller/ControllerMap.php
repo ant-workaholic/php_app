@@ -14,7 +14,47 @@ class ControllerMap
      * @var array
      */
     private $viewMap = array();
+    private $forwardMap = array();
+    private $classrootMap = array();
 
+    public function addForward($command, $status=0, $newCommand)
+    {
+        $this->forwardMap[$command][$status] = $newCommand;
+    }
+
+    /**
+     * @param $command
+     * @param $status
+     * @return null
+     */
+    public function getForward($command, $status)
+    {
+        if (isset($this->forwardMap[$command][$status])) {
+            return $this->forwardMap[$command][$status];
+        }
+        return null;
+    }
+
+    /**
+     * @param $command
+     * @param $classroot
+     */
+    public function addClassroot($command, $classroot)
+    {
+        $this->classrootMap[$command] = $classroot;
+    }
+
+    /**
+     * @param $command
+     * @return mixed
+     */
+    public function getClassroot($command)
+    {
+        if (isset($this->classrootMap[$command])) {
+            return $this->classrootMap[$command];
+        }
+        return null;
+    }
 
     /**
      * Add a view to the mapper

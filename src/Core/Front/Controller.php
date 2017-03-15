@@ -48,6 +48,7 @@ class Controller {
 
     public function invokeView($target)
     {
-        include(realpath("Core/View/$target.php"));
+        include(DIR_BASE . DS ."src" . DS . "Core" . DS . "View" . DS . "$target.phtml");
+        exit;
     }
 }

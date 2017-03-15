@@ -15,6 +15,8 @@ abstract class Command
         'CMD_INSUFFICIENT_DATA'  => 3
     ];
 
+    private $status = 0;
+
     final public function __construct() {}
 
     /**
@@ -22,7 +24,13 @@ abstract class Command
      */
     public function execute(Request $request)
     {
-        $this->doExecute($request);
+        $this->status = $this->doExecute($request);
+        $request->setLastCommand($this);
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
