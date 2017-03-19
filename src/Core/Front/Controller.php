@@ -44,10 +44,15 @@ class Controller {
         while ($cmd = $appController->getCommand($request)) {
             $cmd->execute($request);
         }
-        $this->invokeView($appController->getView($request));
+        $this->invokeView($appController->getView($request), $request);
     }
 
-    public function invokeView($target)
+    /**
+     *
+     * @param $target
+     * @param $request
+     */
+    public function invokeView($target, $request)
     {
         include(DIR_BASE . DS ."src" . DS . "Core" . DS . "View" . DS . "$target.phtml");
         exit;

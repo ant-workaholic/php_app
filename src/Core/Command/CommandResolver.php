@@ -38,7 +38,6 @@ class CommandResolver {
             return self::$default_cmd;
         }
 
-        $cmd = str_replace(array_search('.', $sep), "", $cmd);
         $cmd = ucfirst($cmd);
         $filepath = "Core{$sep}Command{$sep}{$cmd}.php";
         $classname = "Core\\Command\\$cmd";

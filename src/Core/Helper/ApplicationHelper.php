@@ -70,6 +70,11 @@ class ApplicationHelper {
             $status = \Core\Command\Command::statuses($statusConf);
             $map->addView((string) $default_view, 'default', $status);
         }
+        foreach ($routes->command as $command) {
+            $commandName = trim($command["name"]);
+            $view = (string) $command->view;
+            $map->addView($view, $commandName);
+        }
         \Core\Registry\ApplicationRegistry::setControllerMap($map);
     }
 

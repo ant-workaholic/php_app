@@ -1,13 +1,15 @@
 <?php
 namespace Core\Controller;
 
+use Core\Command\CommandResolver;
+
 /**
  * Class AppController
  * @package Core\Controller
  */
 class AppController
 {
-    private static $base_cmd = null;
+    private static $base_cmd = "\\Core\\Command\\Command";
     private static $default_cmd = null;
     private $controllerMap;
     private $invoked = [];
@@ -125,10 +127,16 @@ class AppController
     public function resolveCommand($cmd)
     {
         $classroot = $this->controllerMap->getClassroot($cmd);
-        $filepath = "Core/Command/$classroot";
-        $classname = "\\Core\\Command\\$classroot";
+        $sep = DIRECTORY_SEPARATOR;
+        if ($classroot) {
+            $filepath = "Core/Command/$classroot";
+            $classname = "\\Core\\Command\\$classroot";
+        } else {
+            $filepath = DIR_BASE . "{$sep}src{$sep}Core{$sep}Command{$sep}$cmd.php";
+            $classname = "\\Core\\Command\\$cmd";
+        }
         if (file_exists($filepath)) {
-            require_once ("$filepath");
+            require_once("$filepath");
             if (class_exists($classname)) {
                 $cmdClass = new \ReflectionClass($classname);
                 if ($cmdClass->isSubclassOf(self::$base_cmd)) {
