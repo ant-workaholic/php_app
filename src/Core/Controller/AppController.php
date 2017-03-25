@@ -68,8 +68,9 @@ class AppController
     {
         $cmd_str = $req->getProperty("cmd");
         $previous = $req->getLastCommand();
-        $status = $previous->getStatus();
-
+        if ($previous) {
+            $status = $previous->getStatus();
+        }
         if (!isset($status) || !is_int($status)) { $status = 0; }
         $aquire = "get$res";
         $resource = $this->controllerMap->$aquire($cmd_str, $status);
