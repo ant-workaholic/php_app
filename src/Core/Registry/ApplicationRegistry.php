@@ -80,6 +80,22 @@ class ApplicationRegistry extends RegistryAbstract
     }
 
     /**
+     * Get dns
+     *
+     * @return null|string
+     */
+    public static function getDSN()
+    {
+        $host = self::getConfig()["host"]?:null;
+        $dbName = self::getConfig()["dbname"]?:null;
+        $charset = self::getConfig()["charset"]?:null;
+        if ($host && $charset && $dbName) {
+            return $host . $charset . $dbName;
+        }
+        return null;
+    }
+
+    /**
      * Specify appropriate data
      *
      * @param $key
