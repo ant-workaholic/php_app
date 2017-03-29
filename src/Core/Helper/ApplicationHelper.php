@@ -85,7 +85,9 @@ class ApplicationHelper {
     {
         $this->ensure(file_exists($this->_config), "Config file isn't exist.");
         $options = parse_ini_file($this->_config);
-        if (isset($options["database"])) {
+        if (isset($options["host"])
+            && isset($options["dbname"])
+            && isset($options["charset"])) {
             \Core\Registry\ApplicationRegistry::setConfig($options);
         }
         $this->ensure($options, "The config file is empty!");

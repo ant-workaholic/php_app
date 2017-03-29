@@ -127,13 +127,15 @@ class AppController
      */
     public function resolveCommand($cmd)
     {
+        $dsn = \Core\Registry\ApplicationRegistry::getDSN();
+
         $classroot = $this->controllerMap->getClassroot($cmd);
         $sep = DIRECTORY_SEPARATOR;
         if ($classroot) {
             $filepath = "Core/Command/$classroot";
             $classname = "\\Core\\Command\\$classroot";
         } else {
-            $filepath = DIR_BASE . "{$sep}src{$sep}Core{$sep}Command{$sep}$cmd.php";
+            $filepath = DIR_BASE . $sep . "src" . $sep . "Core" . $sep . "Command" . $sep . $cmd . ".php";
             $classname = "\\Core\\Command\\$cmd";
         }
         if (file_exists($filepath)) {

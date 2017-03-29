@@ -80,7 +80,7 @@ class ApplicationRegistry extends RegistryAbstract
     }
 
     /**
-     * Get dns
+     * Retrieve valid dsn
      *
      * @return null|string
      */
@@ -90,7 +90,7 @@ class ApplicationRegistry extends RegistryAbstract
         $dbName = self::getConfig()["dbname"]?:null;
         $charset = self::getConfig()["charset"]?:null;
         if ($host && $charset && $dbName) {
-            return $host . $charset . $dbName;
+            return "mysql:host=$host;dbname=$dbName;charset=$charset";
         }
         return null;
     }
