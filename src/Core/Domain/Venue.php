@@ -11,6 +11,7 @@ class Venue extends DomainObject
      * @var null
      */
     private $name;
+
     /**
      * @var array
      */
@@ -21,13 +22,16 @@ class Venue extends DomainObject
      * @param null $id
      * @param null $name
      */
-    public function __construct($id=null, $name=null)
+    public function __construct($id = null, $name = null)
     {
         $this->name = $name;
         $this->spaces = self::getCollection("Core\\Domain\\Space");
         parent::__construct($id);
     }
+
     /**
+     * Specify venue name
+     *
      * @param mixed $name
      */
     public function setName($name)
@@ -37,6 +41,8 @@ class Venue extends DomainObject
     }
 
     /**
+     * Set spaces collection
+     *
      * @param mixed $spaces
      */
     public function setSpaces(SpaceCollection $spaces)
@@ -45,6 +51,8 @@ class Venue extends DomainObject
     }
 
     /**
+     * Retrieve a venue name
+     *
      * @return null
      */
     public function getName()
@@ -53,6 +61,8 @@ class Venue extends DomainObject
     }
 
     /**
+     * Add a space to collection
+     *
      * @param Space $space
      */
     public function addSpace(Space $space)
@@ -60,7 +70,4 @@ class Venue extends DomainObject
         $this->spaces->add($space);
         $space->setVenue($this);
     }
-
-
-
 }

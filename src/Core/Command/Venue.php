@@ -2,10 +2,11 @@
 namespace Core\Command;
 use Core\Controller\Request;
 
-class AddVenue extends Command
+class Venue extends Command
 {
     /**
      * @param Request $request
+     * @return bool|mixed
      */
     public function doExecute(Request $request)
     {

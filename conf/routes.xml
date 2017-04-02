@@ -3,10 +3,10 @@
     <view>default</view>
     <view status="CMD_OK">default</view>
     <view status="CMD_ERROR">error</view>
-    <command name="AddVenue">
+    <command name="venue">
         <view>addvenue</view>
     </command>
-    <command name="ProductList">
+    <command name="products">
         <view>product</view>
     </command>
 </control>

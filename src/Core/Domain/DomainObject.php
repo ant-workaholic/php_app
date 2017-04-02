@@ -12,7 +12,7 @@ abstract class DomainObject
      * DomainObject constructor.
      * @param null $id
      */
-    public function __construct($id=null)
+    public function __construct($id = null)
     {
         $this->id = $id;
     }
