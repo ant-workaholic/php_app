@@ -21,6 +21,7 @@ abstract class Base
             throw new \Core\Exception\Base('DSN is not defined');
         }
         try {
+            // TODO: Move the db user and password to configuration. Temporary hardcoded.
             self::$DB = new \PDO($dsn, "root", "");
         } catch (\PDOException $e) {
             echo  $e->getMessage();
