@@ -40,7 +40,7 @@ class Controller {
         $request = \Core\Registry\ApplicationRegistry::getRequest();
         $appController = \Core\Registry\ApplicationRegistry::appController();
 
-        /** @var \Core\Controller\Request $cmd */
+        /** @var \Core\Http\Request $cmd */
         while ($cmd = $appController->getCommand($request)) {
             $cmd->execute($request);
         }

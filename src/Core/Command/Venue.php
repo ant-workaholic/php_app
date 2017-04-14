@@ -1,6 +1,6 @@
 <?php
 namespace Core\Command;
-use Core\Controller\Request;
+use Core\Http\Request;
 
 class Venue extends Command
 {

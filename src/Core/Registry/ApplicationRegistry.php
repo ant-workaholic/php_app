@@ -120,9 +120,9 @@ class ApplicationRegistry extends RegistryAbstract
     /**
      * Save controller map data in cache
      *
-     * @param \Core\Controller\ControllerMap $controllerMap
+     * @param \Core\Http\ControllerMap $controllerMap
      */
-    static function setControllerMap(\Core\Controller\ControllerMap $controllerMap)
+    static function setControllerMap(\Core\Http\ControllerMap $controllerMap)
     {
         self::instance()->set("controller_map", $controllerMap);
     }
@@ -154,7 +154,7 @@ class ApplicationRegistry extends RegistryAbstract
     {
         $inst = self::instance();
         if (is_null($inst->appController)) {
-            $inst->appController = new \Core\Controller\AppController(self::getControllerMap());
+            $inst->appController = new \Core\Http\AppController(self::getControllerMap());
         }
         return $inst->appController;
     }
@@ -162,13 +162,13 @@ class ApplicationRegistry extends RegistryAbstract
     /**
      * Get current request
      *
-     * @return \Core\Controller\Request
+     * @return \Core\Http\Request
      */
     static function getRequest()
     {
         $inst = self::instance();
         if (is_null($inst->request)) {
-            $inst->request = new \Core\Controller\Request();
+            $inst->request = new \Core\Http\Request();
         }
         return $inst->request;
     }

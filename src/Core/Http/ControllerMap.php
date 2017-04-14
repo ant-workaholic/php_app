@@ -2,7 +2,7 @@
 /**
  *
  */
-namespace Core\Controller;
+namespace Core\Http;
 
 /**
  * Class ControllerMap

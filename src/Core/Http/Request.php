@@ -2,7 +2,7 @@
 /**
  * Simple a request wrapper.
  */
-namespace Core\Controller;
+namespace Core\Http;
 
 /**
  * Init request data

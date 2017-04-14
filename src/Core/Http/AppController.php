@@ -1,5 +1,5 @@
 <?php
-namespace Core\Controller;
+namespace Core\Http;
 
 use Core\Command\CommandResolver;
 

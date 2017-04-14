@@ -26,10 +26,10 @@ class CommandResolver {
     }
 
     /**
-     * @param \Core\Controller\Request $request
+     * @param \Core\Http\Request $request
      * @return DefaultCommand|null|object
      */
-    public function getCommand(\Core\Controller\Request $request)
+    public function getCommand(\Core\Http\Request $request)
     {
         $cmd = $request->getProperty('cmd');
         $sep = DIRECTORY_SEPARATOR;

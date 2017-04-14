@@ -1,7 +1,7 @@
 <?php
 
 namespace Core\Command;
-use \Core\Controller\Request;
+use \Core\Http\Request;
 
 /**
  * Class Command
