@@ -10,9 +10,9 @@ abstract class Collection implements \Iterator
     protected $total = 0;
     protected $raw = [];
 
-    private $result;
-    private $pointer = 0;
-    private $objects = [];
+    protected $result;
+    protected $pointer = 0;
+    protected $objects = [];
 
     /**
      * Collection constructor.
@@ -33,7 +33,7 @@ abstract class Collection implements \Iterator
      */
     public function add(\Core\Domain\DomainObject $object)
     {
-        $class = $this->getTargetClass();
+        $class = $this->targetClass();
         if (!($object instanceof $class)) {
             throw \Exception("This collection is of the {$class}");
         }

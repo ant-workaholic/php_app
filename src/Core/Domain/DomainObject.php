@@ -28,7 +28,7 @@ abstract class DomainObject
     /**
      * @return array
      */
-    static function getCollection()
+    static function getCollection($class)
     {
         return array();
     }

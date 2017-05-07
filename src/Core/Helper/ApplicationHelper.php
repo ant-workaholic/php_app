@@ -64,7 +64,7 @@ class ApplicationHelper {
         $this->ensure(file_exists($this->_routers), "The routers files is not exists!");
         $routes = @simplexml_load_file($this->_routers);
 
-        $map = new \Core\Controller\ControllerMap();
+        $map = new \Core\Http\ControllerMap();
         foreach ($routes->view as  $default_view) {
             $statusConf = trim($default_view["status"]);
             $status = \Core\Command\Command::statuses($statusConf);

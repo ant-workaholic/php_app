@@ -1,9 +1,17 @@
 {
+  "require-dev": {
+    "phpspec/phpspec": "*"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
   "require": {
     "monolog/monolog": "dev-master"
   },
   "autoload": {
+    "" : "src/",
     "psr-4": {"Core\\": "src/Core"}
   },
   "minimum-stability": "dev"
 }
+

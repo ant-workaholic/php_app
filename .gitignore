@@ -1,0 +1,8 @@
+/.idea
+/.git
+.composer.lock
+/vendor
+/*.*
+!/composer.json
+!/composer.lock
+!/README.md
