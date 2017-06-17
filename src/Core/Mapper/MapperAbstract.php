@@ -1,10 +1,10 @@
 <?php
-namespace Core\Mapper;
-
 /**
  * The base abstract mapper class
  * @package Core\Mapper
  */
+namespace Core\Mapper;
+
 abstract class MapperAbstract
 {
     protected static $PDO;
@@ -12,6 +12,24 @@ abstract class MapperAbstract
     protected $selectSmth;
     protected $updateSmth;
     protected $insertSmth;
+
+    /**
+     * Retrieve object from map
+     */
+    private function getFromMap($id)
+    {
+        return \Core\Domain\ObjectWatcher::exists($this->targetClass(), $id);
+    }
+
+    /**
+     * Adds an object to a map
+     *
+     * @param \Core\Domain\DomainObject $object
+     */
+    private function addToMap(\Core\Domain\DomainObject $object)
+    {
+        return \Core\Domain\ObjectWatcher::add($object);
+    }
 
     /**
      * MapperAbstract constructor.
@@ -30,11 +48,18 @@ abstract class MapperAbstract
     }
 
     /**
+     * Find an object by id
+     *
      * @param $id
      * @return null
      */
     public function find($id)
     {
+        $oldObject = $this->getFromMap($id);
+        if (!is_null($oldObject)) {
+            return $oldObject;
+        }
+
         $this->selectSmth()->execute(array($id));
         $array = $this->selectSmth()->fetch();
         $this->selectSmth()->closeCursor();
@@ -47,16 +72,25 @@ abstract class MapperAbstract
     }
 
     /**
+     * Create an object.
+     *
      * @param $array
      * @return mixed
      */
     public function createObject($array)
     {
+        $old = $this->getFromMap($array['id']);
+        if (!is_null($old)) {
+            return $old;
+        }
         $obj = $this->doCreateObject($array);
+        $this->addToMap($obj);
         return $obj;
     }
 
     /**
+     * Insert domain object
+     *
      * @param \Core\Domain\DomainObject $object
      */
     public function insert(\Core\Domain\DomainObject $object)
@@ -71,5 +105,6 @@ abstract class MapperAbstract
     abstract function update(\Core\Domain\DomainObject $obj);
     protected abstract function doCreateObject(array $data);
     protected abstract function doInsert(\Core\Domain\DomainObject $object);
-    protected abstract function selectSmth();
+    protected abstract function selectStmt();
+    protected abstract function targetClass();
 }

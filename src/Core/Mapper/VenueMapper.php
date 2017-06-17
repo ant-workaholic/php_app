@@ -58,8 +58,23 @@ class VenueMapper extends MapperAbstract
         $this->updateSmth->execute($values);
     }
 
-    protected function selectSmth()
+    /**
+     *
+     *
+     * @return mixed
+     */
+    protected function selectStmt()
     {
-        return $this->selectSmth();
+        return $this->selectSmth->execute();
+    }
+
+    /**
+     * Get mapper target class
+     *
+     * @return mixed
+     */
+    protected function targetClass()
+    {
+        return \Core\Domain\Venue::class;
     }
 }
