@@ -26,11 +26,16 @@ abstract class DomainObject
     }
 
     /**
+     * Retrieve a model collection
+     *
      * @return array
      */
-    static function getCollection($class)
+    static function getCollection($type = null)
     {
-        return array();
+        if (is_null($type)) {
+            return HelperFactory::getCollection(get_called_class());
+        }
+        return HelperFactory::getCollection($type);
     }
 
     /**

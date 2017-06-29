@@ -16,6 +16,7 @@ abstract class Collection implements \Iterator
 
     /**
      * Collection constructor.
+     *
      * @param array|null $raw
      * @param MapperAbstract|null $mapper
      */
@@ -31,7 +32,7 @@ abstract class Collection implements \Iterator
     /**
      * @param \Core\Domain\DomainObject $object
      */
-    public function add(\Core\Domain\DomainObject $object)
+    public function add(\Core\Domain\DomainObject $object = null)
     {
         $class = $this->targetClass();
         if (!($object instanceof $class)) {

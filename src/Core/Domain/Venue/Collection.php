@@ -1,5 +1,5 @@
 <?php
-namespace Core\Domain\Collection;
+namespace Core\Domain\Venue;
 use \Core\Mapper\Collection as AbstractCollection;
 use Core\Domain\DomainObject;
 
@@ -7,9 +7,8 @@ use Core\Domain\DomainObject;
  * Class VenueCollection
  * @package Core\Mapper
  */
-class VenueCollection
+class Collection
     extends AbstractCollection
-    implements Interfaces\VenueCollectionInterface
 {
 
     /**

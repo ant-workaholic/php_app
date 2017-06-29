@@ -1,6 +1,8 @@
 <?php
 namespace Core\Domain;
 
+use Core\Domain\Collection as Collection;
+
 /**
  * Class Venue
  * @package Core\Domain
@@ -25,7 +27,7 @@ class Venue extends DomainObject
     public function __construct($id = null, $name = null)
     {
         $this->name = $name;
-        $this->spaces = self::getCollection("Core\\Domain\\Space");
+        //$this->spaces = self::getCollection("Core\\Domain\\Space");
         parent::__construct($id);
     }
 

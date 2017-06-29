@@ -10,6 +10,12 @@ class Venue extends Command
      */
     public function doExecute(Request $request)
     {
+        $venue = new \Core\Domain\Venue();
+        $venues = $venue->collection();
+
+        var_dump($venues);
+        exit;
+
         $name = $request->getProperty("venue_name");
         if (is_null($name)) {
             $request->addFeedback("Name was not defined");

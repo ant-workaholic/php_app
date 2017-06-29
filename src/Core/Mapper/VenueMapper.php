@@ -1,12 +1,6 @@
 <?php
 namespace Core\Mapper;
-
-/**
- * Class VenueMapper
- * @package Core\Mapper
- */
-class VenueMapper extends MapperAbstract
-{
+class VenueMapper extends MapperAbstract {
     public function __construct()
     {
         parent::__construct();
@@ -17,11 +11,13 @@ class VenueMapper extends MapperAbstract
     }
 
     /**
-     * @return SpaceCollection
+     * Retrieve a space collection
+     *
+     * @return Domain\Space\Collection
      */
     public function getCollection()
     {
-        return new SpaceCollection();
+        return new Domain\Space\Collection();
     }
 
     /**
@@ -76,5 +72,5 @@ class VenueMapper extends MapperAbstract
     protected function targetClass()
     {
         return \Core\Domain\Venue::class;
-    }
+    }      
 }

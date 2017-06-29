@@ -1,10 +1,9 @@
 <?php
-namespace Core\Domain\Collection;
+namespace Core\Domain\Space;
 use \Core\Mapper\Collection as AbstractCollection;
 
-class SpaceCollection
+class Collection
     extends AbstractCollection
-    implements Interfaces\SpaceCollectionInterface
 {
     /**
      * @return string
