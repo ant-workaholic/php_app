@@ -4,7 +4,12 @@
  * @package Core\Mapper
  */
 namespace Core\Mapper;
+use Core\Domain\DomainObject;
 
+/**
+ * Class MapperAbstract
+ * @package Core\Mapper
+ */
 abstract class MapperAbstract
 {
     protected static $PDO;
@@ -83,8 +88,10 @@ abstract class MapperAbstract
         if (!is_null($old)) {
             return $old;
         }
+        /** @var DomainObject $obj */
         $obj = $this->doCreateObject($array);
         $this->addToMap($obj);
+        $obj->markClean();
         return $obj;
     }
 
@@ -99,11 +106,14 @@ abstract class MapperAbstract
     }
 
     /**
+     * Update element
+     *
      * @param \Core\Domain\DomainObject $obj
      * @return mixed
      */
     abstract function update(\Core\Domain\DomainObject $obj);
     protected abstract function doCreateObject(array $data);
+    abstract function delete(\Core\Domain\DomainObject $obj);
     protected abstract function doInsert(\Core\Domain\DomainObject $object);
     protected abstract function selectStmt();
     protected abstract function targetClass();

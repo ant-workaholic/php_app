@@ -8,7 +8,14 @@ namespace Core\Domain;
  */
 class ObjectWatcher
 {
-    private $all = array();
+    private $all    = array();
+    private $dirty  = array();
+    private $new    = array();
+    private $delete = array();
+
+    /**
+     * @var \Core\Domain\ObjectWatcher $instance
+     */
     private static $instance = null;
 
     private function __construct() {}
@@ -45,7 +52,7 @@ class ObjectWatcher
      */
     static function add(\Core\Domain\DomainObject $object)
     {
-        $inst = self::$instance();
+        $inst = self::instance();
         $inst->all[$inst->globalKey($object)];
     }
 
@@ -64,5 +71,66 @@ class ObjectWatcher
             return $inst->all[$key];
         }
         return null;
+    }
+
+    /**
+     * @param DomainObject $obj
+     */
+    public static function addDelete(DomainObject $obj)
+    {
+        $self = self::$instance;
+        $self->delete[$self->globalKey($obj)] = $obj;
+    }
+
+    /**
+     * @param DomainObject $obj
+     */
+    public static function addDirty(DomainObject $obj)
+    {
+        $inst = self::instance();
+        if (!in_array($obj, $inst->new, true)) {
+            $inst->dirty[$inst->globalKey($obj)] = $obj;
+        }
+    }
+
+    /**
+     * @param DomainObject $obj
+     */
+    public static function addNew(DomainObject $obj)
+    {
+        $inst = self::instance();
+        $inst->new[] = $obj;
+    }
+
+    /**
+     * @param DomainObject $obj
+     */
+    public static function addClean(DomainObject $obj)
+    {
+        $self = self::instance();
+        unset($self->delete[$self->globalKey($obj)]);
+        unset($self->dirty[$self->globalKey($obj)]);
+        $self->new = array_filter($self->new, function ($a) use ($obj) {
+            return !($a === $obj);
+        });
+    }
+
+    /**
+     * Perform operations.
+     */
+    public function performOperations()
+    {
+        foreach ($this->dirty as $key => $obj) {
+            $obj->finder()->update($obj);
+        }
+        foreach ($this->new as $key => $obj) {
+            $obj->finder()->insert($obj);
+        }
+        foreach ($this->delete as $key => $obj) {
+            $obj->finder()->delete($obj);
+        }
+        $this->delete = [];
+        $this->dirty  = [];
+        $this->new    = [];
     }
 }

@@ -1,20 +1,29 @@
 <?php
+/**
+ *
+ */
 namespace Core\Mapper;
 
 /**
  * Class IdentityObject
+ *
  * @package Core\Mapper
  */
 class IdentityObject
 {
+    /**
+     * Current field
+     *
+     * @var \Core\Mapper\Field
+     */
     protected $currentField = null;
     protected $fields       = [];
     private $and            = null;
     private $enforce        = [];
 
-
     /**
      * IdentityObject constructor.
+     *
      * @param null $field
      * @param array|null $enforce
      */
@@ -29,6 +38,8 @@ class IdentityObject
     }
 
     /**
+     * Retrieve allowed fields.
+     *
      * @return array|null
      */
     public function getObjectFields()
@@ -37,6 +48,8 @@ class IdentityObject
     }
 
     /**
+     * Retrieve a field.
+     *
      * @param $fieldName
      * @return $this
      * @throws \Exception
@@ -53,6 +66,8 @@ class IdentityObject
     }
 
     /**
+     * Verify is the fields empty.
+     *
      * @return bool
      */
     public function isVoid()
@@ -61,6 +76,8 @@ class IdentityObject
     }
 
     /**
+     * Enforce field.
+     *
      * @param $fieldName
      * @throws \Exception
      */
@@ -73,6 +90,8 @@ class IdentityObject
     }
 
     /**
+     * Added equal operator.
+     *
      * @param $value
      * @return IdentityObject
      */
@@ -82,6 +101,8 @@ class IdentityObject
     }
 
     /**
+     * Lower than operator.
+     *
      * @param $value
      * @return IdentityObject
      */
@@ -91,6 +112,8 @@ class IdentityObject
     }
 
     /**
+     * Greater than
+     *
      * @param $value
      * @return IdentityObject
      */
@@ -100,6 +123,8 @@ class IdentityObject
     }
 
     /**
+     * Add an operator.
+     *
      * @param $symbol
      * @param $value
      * @return $this
@@ -115,6 +140,8 @@ class IdentityObject
     }
 
     /**
+     * Get comparison array.
+     *
      * @return array
      */
     public function getComps()

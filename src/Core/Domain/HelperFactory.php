@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Domain;
-use PhpSpec\Exception\Exception;
 
 /**
  * Class HelperFactory
@@ -30,7 +29,7 @@ class HelperFactory
      * Find an appropriate mapper class.
      *
      * @param $class
-     * @return bool
+     * @return \Core\Mapper\MapperAbstract | boolean
      */
     public static function getFinder($class)
     {
@@ -108,7 +107,7 @@ class {$className}Mapper extends MapperAbstract {
     }
 
     /**
-     *
+     * 
      *
      * @return mixed
      */
@@ -128,7 +127,6 @@ class {$className}Mapper extends MapperAbstract {
     }      
 }
 CODE;
-
             file_put_contents(DIR_BASE . DS . 'src' . DS .  $mapperClass .".php", $codeGenerated);
         }
     }
